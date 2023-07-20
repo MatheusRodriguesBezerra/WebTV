@@ -1,18 +1,9 @@
-import { Header } from "./components/header";
-import { MainGrid } from "./components/main";
-import { Footer } from "./components/footer";
 import './components/all.css';
-import { VideoPage } from "./components/videoPage";
+import { AppRoutes } from "./routes";
 
 function App() {
   return (
-    <div>
-      <Header />
-      
-      <VideoPage />
-
-      <Footer />
-    </div>
+    <AppRoutes />
   );
 }
 
