@@ -23,8 +23,8 @@ export function MainGrid() {
             {data.map((item) => (
                 <div class="card">
                     <img src={ item.img } alt={ item.alt }/>
-                    <h2>{ item.Title }</h2>
-                    <p>{ item.Description }</p>
+                    <h2>{ item.title }</h2>
+                    <p>{ item.description }</p>
                 </div>
             ))}
             </div>
