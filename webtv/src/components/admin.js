@@ -56,18 +56,14 @@ export function AdmPage() {
   };
 
   // Função para remover uma stream pelo ID
-  const removeStream = (id) => {
-    const db = firebase.firestore();
-    db.collection('streams')
-      .doc(id)
-      .delete()
-      .then(() => {
-        // Atualizar a lista de streams após a remoção
-        setStreams(streams.filter((stream) => stream.id !== id));
-      })
-      .catch((error) => {
-        console.error('Erro ao remover a stream:', error);
-      });
+  function removeStream(id){
+    try {
+      const db = firebase.firestore();
+      db.collection('streams').doc(id).delete();
+      alert("Elemento com ID: " + id + " removido com sucesso!");
+    } catch (error) {
+      alert("Erro ao remover elemento:");
+    }
   };
 
   return (
@@ -113,7 +109,7 @@ export function AdmPage() {
           {streams.map((stream) => (
             <li key={stream.id}>
               {stream.title} - {stream.description}{' '}
-              <button onClick={() => removeStream(stream.id)}>Remover</button>
+              <button onClick={() => removeStream(String(stream.id))}>Remover</button>
             </li>
           ))}
         </ul>

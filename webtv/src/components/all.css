@@ -22,35 +22,49 @@ h1 {
 
 /* Estilizando a barra de pesquisa */
 .upside {
+	text-align: center;
+  }
+  
+  h1 {
+	margin-bottom: 20px;
+  }
+  
+  .search {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 4vh;
-}
-
-.search {
-	display: inline-block;
-}
-
-.searchTerm {
-	width: 200px;
-	height: 30px;
-	padding: 5px;
-	border: none;
-	border-radius: 3px 0 0 3px;
+	justify-content: center;
+  }
+  
+  .searchTerm {
+	padding: 10px;
+	width: 30%;
+	border: 2px solid #ccc;
+	border-radius: 5px;
 	outline: none;
-	color: #333;
-}
-
-.searchButton {
-	width: 40px;
-	height: 30px;
+  }
+  
+  .searchButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	background-color: #007bff;
 	border: none;
-	background-color: #555;
-	color: #fff;
-	border-radius: 0 3px 3px 0;
+	border-radius: 5px;
+	margin-left: 5px;
+  }
+  
+  .bloom {
+	width: 20px;
+	height: auto;
+  }
+  
+  .searchButton:hover {
+	background-color: #0056b3;
 	cursor: pointer;
-}
+  }
+  
+
 
 /* Estilizando a lista de opções */
 .options {
