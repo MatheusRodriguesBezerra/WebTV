@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import 'firebase/compat/firestore';
 import firebase from '../db';
 import { PageNotFound } from './page404';
+import './main.css';
 
 export function MainGrid() {
     const [data, setData] = useState([]);

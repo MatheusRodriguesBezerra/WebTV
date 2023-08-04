@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import 'firebase/compat/firestore';
 import firebase from '../db';
+import './videoPage.css';
 
 export function VideoPage() {
     const [data, setData] = useState([]);
