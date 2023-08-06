@@ -71,8 +71,8 @@ export function AdmPage() {
     <div class="admpg">
       <h1>Admin Page</h1>
       <div>
+        <h2>Adicionar Nova Stream</h2>
         <form>
-          <h2>Adicionar Nova Stream</h2>
           <input
             type="text"
             placeholder="Title"

@@ -30,10 +30,13 @@ export function VideoPage() {
         <div class="video-container">
             <div class="video-section">
                 <h1>{ item.title }</h1>
-                <video controls>
-                    <source src="{ item.link }" type="video/mp4" />
+                {/* <video controls>
+                    <source src={ item.link } type="video/mp4" />
                     Seu navegador não suporta o elemento de vídeo.
-                </video>
+                </video> */}
+                <div class="iframe-container">
+                    <iframe title={ item.title } name="Player" src={ item.link } frameborder="0" allowFullScreen></iframe>
+                </div>
             </div>
         </div>
     );
