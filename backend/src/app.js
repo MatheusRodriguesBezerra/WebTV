@@ -3,13 +3,20 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const db = require('./config/database');
+const authMiddleware = require('./middleware/authMiddleware');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const port = 3001
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.post('/add-channel', async (req, res) => {
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET || 'TgPtvHjKMOoYtCCk7TdKVDWut8NCNirBxi3s/GhuSas=';
+
+app.post('/add-channel', authMiddleware, async (req, res) => {
     try {
         // Converte o array de options para string JSON
         const optionsJson = JSON.stringify(req.body.options);
@@ -32,7 +39,7 @@ app.post('/add-channel', async (req, res) => {
     }
 });
 
-app.post('/delete-channel', async (req, res) => {
+app.post('/delete-channel', authMiddleware, async (req, res) => {
     try {
         await db.query('CALL delete_channel($1)', 
             [req.body.id]
@@ -44,7 +51,7 @@ app.post('/delete-channel', async (req, res) => {
     }
 });
 
-app.post('/edit-channel', async (req, res) => {
+app.post('/edit-channel', authMiddleware, async (req, res) => {
     try {
         // Criar lista de options a partir do req.body.options
         const options = req.body.options.map(opt => ({
@@ -162,10 +169,73 @@ app.get('/get-channel/:id', async (req, res) => {
     }
 });
 
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        const user = await db.query('SELECT * FROM admin WHERE email = $1', 
+            [email]
+        );
+        
+        if (!user.rows[0]) {
+            return res.status(401).json({ message: 'Credenciais inválidas' });
+        }
+        
+        const isValidPassword = await bcrypt.compare(password, user.rows[0].password);
+        
+        if (!isValidPassword) {
+            return res.status(401).json({ message: 'Credenciais inválidas' });
+        }
+        
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+        
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+});
+
+app.post('/register', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        const existingUser = await db.query('SELECT * FROM admin WHERE email = $1', 
+            [email]
+        );
+        
+        if (existingUser.rowCount > 0) {
+            return res.status(400).json({ message: 'Email já cadastrado' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await db.query('INSERT INTO admin (email, password) VALUES ($1, $2) RETURNING *', 
+            [
+                email, 
+                hashedPassword
+            ]
+        );
+
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.status(201).json({ token });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+});
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!')
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })

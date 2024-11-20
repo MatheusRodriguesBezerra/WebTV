@@ -9,6 +9,7 @@ export function AdmPage() {
     const [editingChannel, setEditingChannel] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         fetchChannels();
@@ -41,16 +42,20 @@ export function AdmPage() {
 
     const handleAddChannel = async (channelData) => {
         try {
+    
             const response = await fetch(API_URL + '/add-channel', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Adicione o token
+                },
                 body: JSON.stringify(channelData)
             });
-
+    
             if (!response.ok) {
                 throw new Error('Erro ao adicionar canal');
             }
-
+    
             await fetchChannels();
             setIsFormVisible(false);
         } catch (error) {
@@ -62,7 +67,10 @@ export function AdmPage() {
         try {
             const response = await fetch(API_URL + '/edit-channel', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(channelData)
             });
             
@@ -82,7 +90,10 @@ export function AdmPage() {
         try {
             const response = await fetch(API_URL + '/delete-channel', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
 					id: channelId
 				})
