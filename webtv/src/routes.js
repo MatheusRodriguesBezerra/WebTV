@@ -1,27 +1,39 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Importe seu contexto de autenticação
 import { Header } from "./components/header";
-import { MainGrid } from "./components/main";
-import { VideoPage } from "./components/videoPage";
 import { Footer } from "./components/footer";
-import { AdmPage } from "./components/admin";
-import { PageNotFound } from "./components/page404";
+import { Main } from "./pages/main";
+import { VideoPage } from "./pages/videoPage";
+import { AdmPage } from "./pages/admin";
+import { PageNotFound } from "./pages/page404";
+import { Login } from "./pages/login"; // Adicione a página de login
+import "./index.css"
+
 
 export function AppRoutes() {
     return (
-        <div>
-            <Header />
+        <Router>
+            <div className="min-h-screen m-0 p-0 font-sans bg-[#f2f2f2] text-[#333]">
+                <Header />
 
-            <Router>
                 <Routes>
-                    <Route path="/" element={<MainGrid />} />
-                    <Route path="/:type" element={<MainGrid />} />
-                    <Route path="/streams/:cardId" element={<VideoPage />} />
+                    {/* Rotas públicas */}
+                    <Route path="/" element={<Main />} />
+                    <Route path="/search/:term" element={<Main />} />
+                    <Route path="/stream/:id" element={<VideoPage />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/admin" element={<AdmPage />} />
+                    
+                    {/* Rota protegida */}
+                    {/* <Route element={<PrivateRoute />}>
+                        <Route path="/admin" element={<AdmPage />} />
+                    </Route> */}
+                        
+                    {/* Rota 404 */}
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
-            </Router>
 
-            <Footer />
-        </div>
+                <Footer />
+            </div>
+        </Router>
     );
 }
