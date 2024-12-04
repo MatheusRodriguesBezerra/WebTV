@@ -3,7 +3,7 @@ export function Footer() {
         <footer className="mt-[5%] bg-[#333] p-5 text-center">
             <div className="logo">
                 <img 
-                    src="caminho/para/sua_logo.png" 
+                    src="https://i.ibb.co/Lntzz4b/logo.png" 
                     alt="Logo do seu site"
                     className="max-w-[100px]"
                 />

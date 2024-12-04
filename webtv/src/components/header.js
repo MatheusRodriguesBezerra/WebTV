@@ -20,7 +20,11 @@ export function Header() {
     return(
         <header className="bg-[#333]">
             <div className="text-center flex justify-between items-center p-5">
-                <h1 className="m-0 text-white">WebTV</h1>
+                <img 
+                    src="https://i.ibb.co/r5hZ7mN/logo.png" 
+                    alt="64673" 
+                    className="h-[15vh] brightness-0 invert"
+                />
                 <form 
                     onSubmit={handleSearch}
                     className="flex items-center justify-center"

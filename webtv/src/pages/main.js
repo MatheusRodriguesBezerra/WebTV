@@ -54,21 +54,29 @@ export function Main() {
     }
 
     return (
-        <div className="m-[4%_4%_0_4%]">
-            <div className="grid grid-cols-4 gap-5">
+        <div className="container mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {data.map((item) => (
                     <Link 
-                        className="border border-[#ccc] rounded-md p-5 bg-[#f9f9f9] justify-items-center" 
+                        className="flex flex-col bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden" 
                         to={`/stream/${item.id}`} 
                         key={item.id}
                     >
-                        <img 
-                            src={item.img} 
-                            alt={item.alt} 
-                            className="w-full max-h-[200px] max-w-[200px] object-cover rounded-md mb-2.5"
-                        />
-                        <h2>{item.title}</h2>
-                        <p>{item.description}</p>
+                        <div className="h-48 overflow-hidden flex items-center justify-center">
+                            <img 
+                                src={item.img} 
+                                alt={item.alt} 
+                                className="w-[90%] h-[90%] object-contain transform hover:scale-105 transition-transform duration-300"
+                            />
+                        </div>
+                        <div className="p-4 flex-1 flex flex-col">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-2 line-clamp-2">
+                                {item.title}
+                            </h2>
+                            <p className="text-gray-600 text-sm line-clamp-4">
+                                {item.description}
+                            </p>
+                        </div>
                     </Link>
                 ))}
             </div>
